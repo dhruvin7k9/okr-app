@@ -1,19 +1,32 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import { ObjectivesService } from './objectives.service';
-import {CreateObjectivesDto} from "./create-objectives.dto";
+import {ObjectiveDto} from "./dto/objective.dto";
 
 @Controller('objectives')
 export class ObjectivesController {
-    constructor(private objectivesService: ObjectivesService){}
+    constructor(private service: ObjectivesService){}
     @Get("/")
-    getAll() {
-        return this.objectivesService.getAll();
+    fetchAll() {
+        return this.service.fetchAll();
     }
 
-    @Post()
-    async create(@Body() dto:CreateObjectivesDto){
-        const {title} = dto;
-        const objective = await this.objectivesService.create(title);
-        return {message:"Successfully added", objective};
+    @Get("/:id")
+    fetchUnique(@Param("id") id : string) {
+        return this.service.fetchUnique(Number(id));
+    }
+
+    @Post("/")
+    create(@Body() dto:ObjectiveDto){
+        return this.service.create(dto);
+    }
+
+    @Put("/:id")
+    update(@Param("id") id : string, @Body() dto : ObjectiveDto) {
+        return this.service.update(id, dto);
+    }
+
+    @Delete("/:id")
+    delete(@Param("id") id : string) {
+        return this.service.delete(id);
     }
 }
