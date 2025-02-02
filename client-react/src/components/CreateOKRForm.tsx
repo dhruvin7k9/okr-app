@@ -1,5 +1,5 @@
 import {useContext, useState} from "react";
-import {KeyResultType} from "../types/okr-types";
+import {KeyResultInsertType} from "../types/okr-types";
 import {getOKRObjectives, insertOKRObjective} from "../data/okr-data";
 import {OKRObjectivesProviderContext} from "../provider/OKRObjectivesProvider.tsx";
 
@@ -8,13 +8,13 @@ const emptyKeyResult = {
     initialValue: 0,
     currentValue: 0,
     targetValue: 0,
-    metrics: "",
+    metric: "",
 };
 
 export default function CreateOKRForm() {
     const {setObjectives} = useContext(OKRObjectivesProviderContext);
     const [objectiveTitle, setObjectiveTitle] = useState<string>("");
-    const [keyResults, setKeyResults] = useState<KeyResultType[]>([
+    const [keyResults, setKeyResults] = useState<KeyResultInsertType[]>([
         emptyKeyResult,
     ]);
 
@@ -42,7 +42,7 @@ export default function CreateOKRForm() {
         emptyKeyResult.initialValue = 0;
         emptyKeyResult.currentValue = 0;
         emptyKeyResult.targetValue = 0;
-        emptyKeyResult.metrics = "";
+        emptyKeyResult.metric = "";
     };
 
     return (
@@ -144,9 +144,9 @@ export default function CreateOKRForm() {
                                 id="metricsValue"
                                 placeholder={"Metrics"}
                                 required
-                                value={keyResult.metrics}
+                                value={keyResult.metric}
                                 onChange={(e) => {
-                                    keyResult.metrics = e.target.value;
+                                    keyResult.metric = e.target.value;
                                     setKeyResults([...keyResults]);
                                 }}
                             />
@@ -162,7 +162,7 @@ export default function CreateOKRForm() {
                                         keyResult.initialValue = 0;
                                         keyResult.currentValue = 0;
                                         keyResult.targetValue = 0;
-                                        keyResult.metrics = "";
+                                        keyResult.metric = "";
                                     }
                                     setKeyResults([...keyResults]);
                                 }}
