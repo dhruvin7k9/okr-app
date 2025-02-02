@@ -1,18 +1,37 @@
 import {Injectable} from '@nestjs/common';
-import {DatabaseService} from "../database/database.service";
+import {PrismaService} from "../prisma/prisma.service";
+import {ObjectiveDto} from "./dto/objective.dto";
 
 @Injectable()
 export class ObjectivesService {
-    constructor(private databaseService: DatabaseService) {
+    constructor(private service: PrismaService) {
     }
 
-    async getAll() {
-        const objectives = await this.databaseService.query("SELECT * FROM objectives");
-        return objectives.rows;
+    fetchAll() {
+        return this.service.objective.findMany({
+            include: {
+                keyResult: true,
+            }
+        })
     }
 
-    async create(title: string) {
-        const objectives = await this.databaseService.query("INSERT INTO objectives (title) VALUES ($1) RETURNING *", [title]);
-        return objectives.rows[0];
+    fetchUnique(number: number) {
+        return this.service.objective.findUnique({
+            include: {
+                keyResult: true,
+            }
+        })
+    }
+
+    create(dto: ObjectiveDto) {
+        return this.service.objective.create({data: dto});
+    }
+
+    update(id: string, dto: ObjectiveDto) {
+        return this.service.objective.update({where: id, data: dto})
+    }
+
+    delete(id: string) {
+        return this.service.objective.delete({where: id});
     }
 }

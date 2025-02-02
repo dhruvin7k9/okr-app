@@ -16,7 +16,7 @@ export class ObjectivesController {
     }
 
     @Post("/")
-    create(@Body() dto:ObjectiveDto){
+    create(@Body() dto : ObjectiveDto){
         return this.service.create(dto);
     }
 
