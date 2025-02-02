@@ -28,10 +28,10 @@ export class ObjectivesService {
     }
 
     update(id: string, dto: ObjectiveDto) {
-        return this.service.objective.update({where: id, data: dto})
+        return this.service.objective.update({where: {id : id}, data: dto})
     }
 
     delete(id: string) {
-        return this.service.objective.delete({where: id});
+        return this.service.objective.delete({where: {id : id}});
     }
 }
