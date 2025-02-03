@@ -1,14 +1,18 @@
 import {useContext, useState} from "react";
-import {ObjectiveType, OKRObjectivesProviderType} from "../types/okr-types";
+import {KeyResultType, ObjectiveType, OKRObjectivesProviderType} from "../types/okr-types";
 import AddKeyResultModal from "./AddKeyResultModal";
-import UpdateObjectiveModal from "./UpdateObjectiveModal.tsx";
+import UpdateKeyResultModal from "./UpdateKeyResultModal.tsx";
+import UpdateObjectiveTitleModal from "./UpdateObjectiveTitleModal.tsx";
 import {deleteOKRKeyResult, deleteOKRObjective, getOKRObjectives} from "../data/okr-data.ts";
 import {OKRObjectivesProviderContext} from "../provider/OKRObjectivesProvider.tsx";
 
 export default function ShowOKRsForm() {
-    const [objectiveIndex, setObjectiveIndex] = useState<string>("");
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isObjectiveModalOpen, setIsObjectiveModalOpen] = useState<boolean>(false);
+    const [objectiveIndex, setObjectiveIndex] = useState<string | number>();
+    const [objectiveTitle, setObjectiveTitle] = useState<string>("");
+    const [keyResult, setKeyResult] = useState<KeyResultType>();
+    const [isCreateKeyResultModalOpen, setIsCreateKeyResultModalOpen] = useState<boolean>(false);
+    const [isUpdateKeyResultModalOpen, setIsUpdateKeyResultModalOpen] = useState<boolean>(false);
+    const [isObjectiveTitleModalOpen, setIsObjectiveTitleModalOpen] = useState<boolean>(false);
     const {objectives, setObjectives} = useContext<OKRObjectivesProviderType>(OKRObjectivesProviderContext);
 
     return (
@@ -32,17 +36,18 @@ export default function ShowOKRsForm() {
                                                     className="border-1 bg-gray-400 px-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-gray-600  "
                                                     onClick={() => {
                                                         setObjectiveIndex(objective.id);
-                                                        setIsObjectiveModalOpen(true);
+                                                        setObjectiveTitle(objective.title);
+                                                        setIsObjectiveTitleModalOpen(true);
                                                     }}
                                                 >
-                                                    Update Objective
+                                                    Update Title
                                                 </button>
 
                                                 <button
                                                     className="border-1 bg-gray-400 p-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-gray-600  "
                                                     onClick={() => {
                                                         setObjectiveIndex(objective.id);
-                                                        setIsModalOpen(true);
+                                                        setIsCreateKeyResultModalOpen(true);
                                                     }}
                                                 >
                                                     Add key result
@@ -64,8 +69,8 @@ export default function ShowOKRsForm() {
                                         </div>
                                     </li>
                                     <ul className="list-disc pl-8 space-y-3">
-                                        {objective.keyResults.map((keyResult, keyResultIndex) => (
-                                            <li key={keyResultIndex} className="p-2">
+                                        {objective.keyResults.map((keyResult) => (
+                                            <li key={keyResult.id} className="p-2">
                                                 <h1 className="uppercase text-xl font-bold font-mono">
                                                     {keyResult.title}
                                                 </h1>
@@ -80,18 +85,27 @@ export default function ShowOKRsForm() {
                                                     Target:{keyResult.targetValue}
                                                 </span>
                                                     <button
+                                                        className="border-1 bg-blue-400 p-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-blue-600  "
+                                                        onClick={() => {
+                                                            setKeyResult(keyResult);
+                                                            setIsUpdateKeyResultModalOpen(true);
+                                                        }}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
                                                         className="border-1 bg-red-400 p-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-red-600  "
                                                         onClick={async () => {
-                                                            objective.keyResults.splice(keyResultIndex, 1);
-                                                            await deleteOKRKeyResult(objectiveIndex, objective);
-                                                            setObjectives([...objectives]);
+                                                            await deleteOKRKeyResult(keyResult.id);
+                                                            const updatedObjectives = await getOKRObjectives();
+                                                            setObjectives(updatedObjectives);
                                                         }}
                                                     >
                                                         Delete
                                                     </button>
                                                 </div>
                                                 <span className="pl-4 space-x-2 text-xl">
-                                                    Metric:{keyResult.metrics}</span>
+                                                    Metric:{keyResult.metric}</span>
                                             </li>
                                         ))}
                                     </ul>
@@ -103,18 +117,26 @@ export default function ShowOKRsForm() {
                     No objectives to display ☹️
                 </h1>
             )}
-
-            {isModalOpen && (
+            
+            {isCreateKeyResultModalOpen && (
                 <AddKeyResultModal
                     objectiveID={objectiveIndex}
-                    setIsModalOpen={setIsModalOpen}
+                    setIsModalOpen={setIsCreateKeyResultModalOpen}
+                />
+            )}
+            
+            {isUpdateKeyResultModalOpen && (
+                <UpdateKeyResultModal
+                    keyResult={keyResult}
+                    setIsModalOpen={setIsUpdateKeyResultModalOpen}
                 />
             )}
 
-            {isObjectiveModalOpen && (
-                <UpdateObjectiveModal
+            {isObjectiveTitleModalOpen && (
+                <UpdateObjectiveTitleModal
                     objectiveID={objectiveIndex}
-                    setIsObjectiveModalOpen={setIsObjectiveModalOpen}
+                    objectiveTitle={objectiveTitle}
+                    setIsObjectiveModalOpen={setIsObjectiveTitleModalOpen}
                 />
             )}
         </div>
