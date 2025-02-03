@@ -1,11 +1,11 @@
-import {KeyResultType, OKRObjectivesProviderType} from "../types/okr-types";
+import {KeyResultInsertType, OKRObjectivesProviderType} from "../types/okr-types";
 import React, {useContext, useState} from "react";
-import {addOKRKeyResult} from "../data/okr-data.ts";
+import {addOKRKeyResult, getOKRObjectives} from "../data/okr-data.ts";
 import {OKRObjectivesProviderContext} from "../provider/OKRObjectivesProvider.tsx";
 
 type AddKeyResultModalProp = {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    objectiveID: string;
+    objectiveID: string | number | undefined;
 };
 
 const emptyKeyResult = {
@@ -13,15 +13,15 @@ const emptyKeyResult = {
     initialValue: 0,
     currentValue: 0,
     targetValue: 0,
-    metrics: "",
+    metric: "",
 };
 
 export default function AddKeyResultModal({
                                               setIsModalOpen,
                                               objectiveID,
                                           }: AddKeyResultModalProp) {
-    const [keyResult, setKeyResult] = useState<KeyResultType>(emptyKeyResult);
-    const {objectives, setObjectives} = useContext<OKRObjectivesProviderType>(OKRObjectivesProviderContext);
+    const [keyResult, setKeyResult] = useState<KeyResultInsertType>(emptyKeyResult);
+    const {setObjectives} = useContext<OKRObjectivesProviderType>(OKRObjectivesProviderContext);
 
     return (
         <div className="inset-0 fixed flex justify-center bg-black bg-opacity-25">
@@ -40,6 +40,7 @@ export default function AddKeyResultModal({
                     required
                     onChange={(e) => {
                         keyResult.title = e.target.value;
+                        setKeyResult(keyResult);
                     }}
                 />
 
@@ -94,7 +95,7 @@ export default function AddKeyResultModal({
                         placeholder={"Metrics"}
                         required
                         onChange={(e) => {
-                            keyResult.metrics = e.target.value;
+                            keyResult.metric = e.target.value;
                             setKeyResult(keyResult);
                         }}
                     />
@@ -104,13 +105,9 @@ export default function AddKeyResultModal({
                             "border-1 bg-blue-400 p-3 text-white rounded-lg uppercase font-semibold  hover:bg-blue-600"
                         }
                         onClick={async () => {
-                            setKeyResult(keyResult);
-                            const objective = objectives!.find((obj) => objectiveID === obj.id);
-                            if (objective) {
-                                objective.keyResults.push({...keyResult});
-                                await addOKRKeyResult(objectiveID, objective);
-                            }
-                            setObjectives([...objectives!]);
+                            await addOKRKeyResult(objectiveID, keyResult);
+                            const updatedObjectives = await getOKRObjectives();
+                            setObjectives(updatedObjectives);
                             setIsModalOpen(false);
                         }}
                     >
