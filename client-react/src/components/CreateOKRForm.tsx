@@ -24,12 +24,12 @@ export default function CreateOKRForm() {
     const resetObjectiveTitle = () => {
         setObjectiveTitle("");
     };
-    const addObjectives = () => {
+    const addObjectives = async () => {
         const newOKR = {
             title: objectiveTitle,
             keyResults: [...keyResults],
         };
-        insertOKRObjective(newOKR).then(async () => {
+        await insertOKRObjective(newOKR).then(async () => {
             setObjectives(await getOKRObjectives());
             resetKeyResults();
             resetObjectiveTitle();
