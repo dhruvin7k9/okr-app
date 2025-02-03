@@ -127,7 +127,7 @@ export default function ShowOKRsForm() {
             
             {isUpdateKeyResultModalOpen && (
                 <UpdateKeyResultModal
-                    keyResult={keyResult}
+                    keyResult={keyResult!}
                     setIsModalOpen={setIsUpdateKeyResultModalOpen}
                 />
             )}
