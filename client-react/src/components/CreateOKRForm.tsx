@@ -19,7 +19,12 @@ export default function CreateOKRForm() {
     ]);
 
     const resetKeyResults = () => {
-        setKeyResults([emptyKeyResult]);
+        setKeyResults([{...emptyKeyResult}]);
+        emptyKeyResult.title = "";
+        emptyKeyResult.initialValue = 0;
+        emptyKeyResult.currentValue = 0;
+        emptyKeyResult.targetValue = 0;
+        emptyKeyResult.metric = "";
     };
     const resetObjectiveTitle = () => {
         setObjectiveTitle("");
