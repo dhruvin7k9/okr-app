@@ -6,32 +6,33 @@ import {ObjectiveDto} from "./dto/objective.dto";
 export class ObjectivesService {
     constructor(private service: PrismaService) {
     }
-
+    
     fetchAll() {
         return this.service.objective.findMany({
             include: {
-                keyResult: true,
+                keyResults: true,
             }
         })
     }
-
-    fetchUnique(number: number) {
+    
+    fetchUnique(id: number) {
         return this.service.objective.findUnique({
+            where: {id: id},
             include: {
-                keyResult: true,
+                keyResults: true,
             }
         })
     }
-
+    
     create(dto: ObjectiveDto) {
         return this.service.objective.create({data: dto});
     }
-
-    update(id: string, dto: ObjectiveDto) {
-        return this.service.objective.update({where: {id : id}, data: dto})
+    
+    update(id: number, dto: ObjectiveDto) {
+        return this.service.objective.update({where: {id: id}, data: dto})
     }
-
-    delete(id: string) {
-        return this.service.objective.delete({where: {id : id}});
+    
+    delete(id: number) {
+        return this.service.objective.delete({where: {id: id}});
     }
 }
