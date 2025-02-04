@@ -8,13 +8,13 @@ export class KeyResultsService {
     }
 
     fetchAll(objectiveId: number) {
-        return this.service.keyResult.fetchAll({
+        return this.service.keyResult.findMany({
             where: {objectiveId: objectiveId}
         });
     }
 
     fetchUnique(id: number) {
-        return this.service.keyResult.fetchUnique({where: {id: id}});
+        return this.service.keyResult.findUnique({where: {id: id}});
     }
 
     createMany(dtoArray: KeyResultDto[]) {

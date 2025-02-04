@@ -7,33 +7,33 @@ export class KeyResultsController {
     constructor(private readonly service: KeyResultsService) {
     }
 
-    @Get("?objectiveId=:objectiveId")
+    @Get("objectiveId/:objectiveId")
     fetchAll(@Param("objectiveId") objectiveId: string) {
-        this.service.fetchAll(Number(objectiveId));
+        return this.service.fetchAll(Number(objectiveId));
     }
 
-    @Get("/:id")
+    @Get(":id")
     fetchUnique(@Param("id") id: string) {
-        this.service.fetchUnique(Number(id));
+        return this.service.fetchUnique(Number(id));
     }
 
-    @Post("?many")
+    @Post("many")
     createMany(@Body() dtoArray: KeyResultDto[]) {
-        this.service.createMany(dtoArray);
+        return this.service.createMany(dtoArray);
     }
 
-    @Post("/")
+    @Post("")
     create(@Body() dto: KeyResultDto) {
-        this.service.create(dto);
+        return this.service.create(dto);
     }
 
-    @Put("/:id")
+    @Put(":id")
     update(@Param("id") id : string, @Body() dto : KeyResultDto) {
-        this.service.update(Number(id), dto);
+        return this.service.update(Number(id), dto);
     }
 
-    @Delete("/:id")
+    @Delete(":id")
     delete(@Param("id") id : string) {
-        this.service.delete(Number(id));
+        return this.service.delete(Number(id));
     }
 }
