@@ -31,9 +31,9 @@ export default function ShowOKRsForm() {
                                         <span className="uppercase font-bold text-2xl w-1/2 ">
                                             {objective.title}
                                         </span>
-                                            <div className="flex space-x-2 border-2">
+                                            <div className="flex space-x-2">
                                                 <button
-                                                    className="border-1 bg-gray-400 px-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-gray-600  "
+                                                    className="border-1 bg-gray-400 px-1.5 py-0 text-sm text-white rounded-md font-bold  hover:bg-gray-600 text-nowrap"
                                                     onClick={() => {
                                                         setObjectiveIndex(objective.id);
                                                         setObjectiveTitle(objective.title);
@@ -44,7 +44,7 @@ export default function ShowOKRsForm() {
                                                 </button>
 
                                                 <button
-                                                    className="border-1 bg-gray-400 p-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-gray-600  "
+                                                    className="border-1 bg-gray-400 px-1.5 py-0 text-white rounded-md font-bold  hover:bg-gray-600 text-nowrap"
                                                     onClick={() => {
                                                         setObjectiveIndex(objective.id);
                                                         setIsCreateKeyResultModalOpen(true);
@@ -55,7 +55,7 @@ export default function ShowOKRsForm() {
 
                                                 <button
                                                     className={
-                                                        "border-1 bg-red-400 p-2 text-sm text-white rounded-md uppercase font-semibold  hover:bg-red-600  "
+                                                        "border-1 bg-red-400 px-1.5 py-0 text-sm text-white rounded-md font-bold text-nowrap"
                                                     }
                                                     onClick={async () => {
                                                         await deleteOKRObjective(objective.id);

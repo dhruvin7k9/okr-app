@@ -19,7 +19,7 @@ function App() {
     
     return (
         
-        <div className="flex mt-8">
+        <div className="flex">
             <CreateOKRForm/>
             {isLoading ? (
                 <div
