@@ -2,6 +2,7 @@ import {useContext, useState} from "react";
 import {KeyResultInsertType} from "../types/okr-types";
 import {getOKRObjectives, insertOKRObjective} from "../data/okr-data";
 import {OKRObjectivesProviderContext} from "../provider/OKRObjectivesProvider.tsx";
+import GenerateOKRPrompt from "./GenerateOKRPrompt.tsx";
 
 const emptyKeyResult = {
     title: "",
@@ -198,6 +199,10 @@ export default function CreateOKRForm() {
                 >
                     <span>Add Objective</span>
                 </button>
+            </div>
+            
+            <div>
+                <GenerateOKRPrompt/>
             </div>
         </div>
     );

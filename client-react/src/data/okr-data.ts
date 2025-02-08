@@ -2,6 +2,16 @@ import {KeyResultInsertType, ObjectiveInsertType, ObjectiveType} from "../types/
 
 const URL = "http://localhost:3000";
 
+async function generateOKRHandler(prompt : string) {
+    const responseData = await fetch(`${URL}/prompt?input=${prompt}`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    });
+    return await responseData.json();
+}
+
 async function getOKRObjectives(): Promise<ObjectiveType[]> {
     const responseData = await fetch(`${URL}/objectives`, {
         headers: {
@@ -101,5 +111,6 @@ export {
     updateOKRKeyResult,
     deleteOKRObjective,
     deleteOKRKeyResult,
-    addOKRKeyResult
+    addOKRKeyResult,
+    generateOKRHandler
 };
