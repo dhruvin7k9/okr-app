@@ -9,7 +9,8 @@ async function generateOKRHandler(prompt : string) {
         },
         method: "GET"
     });
-    return await responseData.json();
+    
+    return ;
 }
 
 async function getOKRObjectives(): Promise<ObjectiveType[]> {

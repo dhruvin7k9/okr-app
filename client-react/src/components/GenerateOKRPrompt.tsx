@@ -1,12 +1,16 @@
-import {useState} from "react";
-import {generateOKRHandler} from "../data/okr-data.ts";
+import {useContext, useState} from "react";
+import {generateOKRHandler, getOKRObjectives} from "../data/okr-data.ts";
+import {OKRObjectivesProviderContext} from "../provider/OKRObjectivesProvider.tsx";
 
 export default function GenerateOKRPrompt() {
     const [prompt, setPrompt] = useState("");
+    const {setObjectives} = useContext(OKRObjectivesProviderContext);
     
     async function generateOkr() {
         await generateOKRHandler(prompt);
         setPrompt("");
+        const objectives = await getOKRObjectives();
+        setObjectives(objectives);
     }
     
     return (
@@ -15,6 +19,7 @@ export default function GenerateOKRPrompt() {
                 className="border px-3 py-3 block w-full rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
                 type="text"
                 placeholder="what's in your mind ?"
+                value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
             />
             <button
