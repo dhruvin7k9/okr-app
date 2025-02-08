@@ -16,7 +16,7 @@ export default function ShowOKRsForm() {
     const {objectives, setObjectives} = useContext<OKRObjectivesProviderType>(OKRObjectivesProviderContext);
 
     return (
-        <div className="mx-auto max-w-3xl border px-4 py-2 flex-grow space-y-8">
+        <div className="mx-auto w-4xl border px-4 py-2 flex-grow space-y-8">
             {objectives !== null && objectives.length > 0 ? (
                 <>
                     <h1 className="uppercase text-3xl font-bold font-mono py-8 text-center">
@@ -33,7 +33,7 @@ export default function ShowOKRsForm() {
                                         </span>
                                             <div className="flex space-x-2">
                                                 <button
-                                                    className="border-1 bg-gray-400 px-1.5 py-0 text-sm text-white rounded-md font-bold  hover:bg-gray-600 text-nowrap"
+                                                    className="border-1 bg-gray-400 h-10 px-1.5 py-0 text-sm text-white rounded-md font-bold  hover:bg-gray-600 text-nowrap"
                                                     onClick={() => {
                                                         setObjectiveIndex(objective.id);
                                                         setObjectiveTitle(objective.title);
@@ -44,7 +44,7 @@ export default function ShowOKRsForm() {
                                                 </button>
 
                                                 <button
-                                                    className="border-1 bg-gray-400 px-1.5 py-0 text-white rounded-md font-bold  hover:bg-gray-600 text-nowrap"
+                                                    className="border-1 bg-gray-400 h-10 px-1.5 py-0 text-white rounded-md font-bold  hover:bg-gray-600 text-nowrap"
                                                     onClick={() => {
                                                         setObjectiveIndex(objective.id);
                                                         setIsCreateKeyResultModalOpen(true);
@@ -55,7 +55,7 @@ export default function ShowOKRsForm() {
 
                                                 <button
                                                     className={
-                                                        "border-1 bg-red-400 px-1.5 py-0 text-sm text-white rounded-md font-bold text-nowrap"
+                                                        "border-1 bg-red-400 h-10 px-1.5 py-0 text-sm text-white rounded-md font-bold text-nowrap"
                                                     }
                                                     onClick={async () => {
                                                         await deleteOKRObjective(objective.id);

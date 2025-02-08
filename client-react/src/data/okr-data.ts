@@ -9,7 +9,7 @@ async function generateOKRHandler(prompt : string) {
         },
         method: "GET"
     });
-    
+    console.log(responseData);
     return ;
 }
 

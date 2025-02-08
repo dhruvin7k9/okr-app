@@ -52,7 +52,7 @@ export default function CreateOKRForm() {
     };
 
     return (
-        <div className="border px-4 py-8 max-w-3xl mx-auto space-y-10 ">
+        <div className="border px-4 py-8 max-w-2xl mx-auto space-y-10 ">
             <h1 className="uppercase text-3xl font-bold font-mono	 text-center">
                 Create Objective Form
             </h1>
@@ -97,7 +97,7 @@ export default function CreateOKRForm() {
                             }}
                         />
 
-                        <div className="flex gap-x-4">
+                        <div className="flex">
                             <input
                                 className={
                                     "border px-3 py-3  rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
