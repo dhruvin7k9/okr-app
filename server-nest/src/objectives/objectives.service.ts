@@ -32,7 +32,8 @@ export class ObjectivesService {
         return this.service.objective.update({where: {id: id}, data: dto})
     }
     
-    delete(id: number) {
+    async delete(id: number) {
+        await this.service.keyResult.deleteMany({where: {objectiveId: id}});
         return this.service.objective.delete({where: {id: id}});
     }
 }

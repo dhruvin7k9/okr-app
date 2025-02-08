@@ -26,7 +26,7 @@ export class ObjectivesController {
     }
 
     @Delete(":id")
-    delete(@Param("id") id : string) {
-        return this.service.delete(Number(id));
+    async delete(@Param("id") id : string) {
+        return await this.service.delete(Number(id));
     }
 }
